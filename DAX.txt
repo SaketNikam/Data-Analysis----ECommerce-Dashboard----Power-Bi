@@ -1,0 +1,58 @@
+Previous YTD Profit = CALCULATE(SUM(ecommerce_data[profit_per_order]),DATESYTD(SAMEPERIODLASTYEAR('Calendar'[Date])))
+
+Previous YTD Profit Margin = CALCULATE([Profit Margin],DATESYTD(SAMEPERIODLASTYEAR('Calendar'[Date])))
+
+Previous YTD Qty = CALCULATE(SUM(ecommerce_data[order_quantity]),DATESYTD(SAMEPERIODLASTYEAR('Calendar'[Date])))
+
+Previous YTD Sales = CALCULATE(SUM(ecommerce_data[sales_per_order]),DATESYTD(SAMEPERIODLASTYEAR('Calendar'[Date])))
+
+Profit Colour = IF([YOY Profit]>0,"Green","Red")
+
+Profit Icon = var positive_icon = UNICHAR(9650)
+var negative_icon = UNICHAR(9660)
+var result = if([YOY Profit]>0,positive_icon,negative_icon)
+return result
+
+Profit Margin = SUM(ecommerce_data[profit_per_order])/SUM(ecommerce_data[sales_per_order])
+
+Profit Margin Colour = IF([YOY Profit Margin]>0,"Green","Red")
+
+Profit Margin Icon = var positive_icon = UNICHAR(9650)
+var negative_icon = UNICHAR(9660)
+var result = if([YOY Profit Margin]>0,positive_icon,negative_icon)
+return result
+
+Qty Colour = IF([YOY Qty]>0,"Green","Red")
+
+Qty Icon = var positive_icon = UNICHAR(9650)
+var negative_icon = UNICHAR(9660)
+var result = if([YOY Qty]>0,positive_icon,negative_icon)
+return result
+
+Sales Colour = IF([YOY Sales]>0,"Green","Red")
+
+Sales Icon = var positive_icon = UNICHAR(9650)
+var negative_icon = UNICHAR(9660)
+var result = if([YOY Sales]>0,positive_icon,negative_icon)
+return result
+
+Sales Icon Colour = IF([YOY Sales]>0,"Green","Red")
+
+YOY Profit = ([YTD Profit]-[Previous YTD Profit])/[YTD Profit]
+
+YOY Profit Margin = ([YTD Profit Margin]-[Previous YTD Profit Margin])/[YTD Profit Margin]
+
+YOY Qty = ([YTD Qty]-[Previous YTD Qty])/[YTD Qty]
+
+YOY Sales = ([YTD Sales]-[Previous YTD Sales])/[YTD Sales]
+
+YTD Concatenated Qty = CONCATENATE("#", FORMAT([YTD Qty]/1000, "0.0 K"))
+
+YTD Profit = TOTALYTD(SUM(ecommerce_data[profit_per_order]),'Calendar'[Date])
+
+YTD Profit Margin = TOTALYTD([Profit Margin],'Calendar'[Date])
+
+YTD Qty = TOTALYTD(SUM(ecommerce_data[order_quantity]),'Calendar'[Date])
+
+YTD Sales = TOTALYTD(SUM(ecommerce_data[sales_per_order]),'Calendar'[Date])
+
