@@ -1,0 +1,142 @@
+YTD Sales = 
+CALCULATE(
+    SUM(Sales[SalesAmount]),
+    DATESYTD('Calendar'[Date])
+)
+
+Previous YTD Sales = 
+CALCULATE(
+    SUM(Sales[SalesAmount]),
+    DATESYTD('Calendar'[Date], "12/31"),
+    SAMEPERIODLASTYEAR('Calendar'[Date])
+)
+
+YOY Sales % Change = 
+DIVIDE(
+    [YTD Sales] - [Previous YTD Sales],
+    [Previous YTD Sales],
+    0
+)
+
+YTD Profit = 
+CALCULATE(
+    SUM(Sales[Profit]),
+    DATESYTD('Calendar'[Date])
+)
+
+Previous YTD Profit = 
+CALCULATE(
+    SUM(Sales[Profit]),
+    DATESYTD('Calendar'[Date], "12/31"),
+    SAMEPERIODLASTYEAR('Calendar'[Date])
+)
+
+YOY Profit % Change = 
+DIVIDE(
+    [YTD Profit] - [Previous YTD Profit],
+    [Previous YTD Profit],
+    0
+)
+
+
+YTD Quantity = 
+CALCULATE(
+    SUM(Sales[Quantity]),
+    DATESYTD('Calendar'[Date])
+)
+
+Previous YTD Quantity = 
+CALCULATE(
+    SUM(Sales[Quantity]),
+    DATESYTD('Calendar'[Date], "12/31"),
+    SAMEPERIODLASTYEAR('Calendar'[Date])
+)
+
+YOY Quantity % Change = 
+DIVIDE(
+    [YTD Quantity] - [Previous YTD Quantity],
+    [Previous YTD Quantity],
+    0
+)
+
+
+YTD Profit Margin = 
+DIVIDE(
+    [YTD Profit],
+    [YTD Sales],
+    0
+)
+
+Previous YTD Profit Margin = 
+DIVIDE(
+    [Previous YTD Profit],
+    [Previous YTD Sales],
+    0
+)
+
+YOY Margin % Change = 
+DIVIDE(
+    [YTD Profit Margin] - [Previous YTD Profit Margin],
+    [Previous YTD Profit Margin],
+    0
+)
+
+
+Sales by Region = 
+CALCULATE(
+    [YTD Sales],
+    ALL('Region'),
+    VALUES('Region'[RegionName])
+)
+
+
+Sales by Category = 
+CALCULATE(
+    [YTD Sales],
+    VALUES('Products'[Category])
+)
+
+YOY Sales % Change by Category = 
+DIVIDE(
+    [Sales by Category] - [Previous YTD Sales by Category],
+    [Previous YTD Sales by Category],
+    0
+)
+
+
+Top Products by Sales = 
+TOPN(
+    5,
+    ADDCOLUMNS(
+        VALUES(Products[ProductName]),
+        "Sales", [YTD Sales]
+    ),
+    [YTD Sales], DESC
+)
+
+Bottom Products by Sales = 
+TOPN(
+    5,
+    ADDCOLUMNS(
+        VALUES(Products[ProductName]),
+        "Sales", [YTD Sales]
+    ),
+    [YTD Sales], ASC
+)
+
+
+Sales by Shipping Type = 
+CALCULATE(
+    [YTD Sales],
+    VALUES(Sales[ShippingType])
+)
+
+
+% Sales by Shipping Type = 
+DIVIDE(
+    [Sales by Shipping Type],
+    [YTD Sales],
+    0
+)
+
+
